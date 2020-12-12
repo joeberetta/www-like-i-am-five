@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Главная | Просто о WWW</title>
+	</head>
+	<body>
+		<style>
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+				background-color: #272727;
+				color: #fff;
+			}
+			#main {
+				min-height: 10vh;
+				margin: 0 auto;
+				padding: 0.5rem 0;
+				width: 60rem;
+				max-width: calc(100% - 0.5rem);
+			}
+		</style>
+		<div id="header" data-include="components/header.html"></div>
+		<div id="menu"></div>
+		<div id="main"></div>
+		<div id="footer" data-include="components/footer.html"></div>
+		<style id="mobile"></style>
+
+		<script src="assets/includeHTML.js"></script>
+		<script>
+			const defaultTitle = 'Просто о WWW';
+			includeHTML(
+				'components/menu.html',
+				document.getElementById('menu'),
+				() => {
+					includeHTML('assets/mobile.css');
+					includeHTML('assets/yt.js');
+					const preloadContainer = document.createElement('div');
+					preloadContainer.id = 'preloaded-pages';
+					preloadContainer.hidden = true;
+
+					const containerId = 'main';
+					const destination = document.getElementById(containerId);
+					const menuWrapper = document.getElementById('menu-wrapper');
+					const menuBtns = menuWrapper.querySelectorAll('button[data-page]');
+
+					[...menuBtns].forEach((btn, i) => {
+						const pageUrl = btn.dataset.page;
+						const pageWrapper = document.createElement('div');
+						pageWrapper.id = pageUrl;
+						includeHTML(pageUrl, pageWrapper);
+
+						const lastSeenPage = sessionStorage.getItem('wir-last-seen-page');
+						destination.appendChild(pageWrapper);
+						if (lastSeenPage) {
+							const activePage = [...menuBtns].find(
+								(btn) => btn.dataset.page === lastSeenPage
+							);
+							activePage.disabled = true;
+							document.title = activePage.innerText + ` | ${defaultTitle}`;
+							lastSeenPage !== pageWrapper.id
+								? (pageWrapper.hidden = true)
+								: pageWrapper.removeAttribute('hidden');
+						} else {
+							if (i === 0) {
+								[...menuBtns].find(
+									(btn) => btn.dataset.page === pageWrapper.id
+								).disabled = true;
+
+								pageWrapper.removeAttribute('hidden');
+								sessionStorage.setItem('wir-last-seen-page', pageUrl);
+							} else {
+								pageWrapper.hidden = true;
+							}
+						}
+
+						btn.addEventListener('click', () => {
+							sessionStorage.setItem('wir-last-seen-page', pageUrl);
+							btn.disabled = true;
+							[...destination.getElementsByTagName('div')].forEach((page) =>
+								page.id === pageUrl
+									? page.removeAttribute('hidden')
+									: (page.hidden = true)
+							);
+							[...menuBtns]
+								.filter((otherBtn) => otherBtn.dataset.page !== pageUrl)
+								.forEach((inActiveBtn) =>
+									inActiveBtn.removeAttribute('disabled')
+								);
+
+							if (!document.title.startsWith(btn.innerText)) {
+								document.title = btn.innerText + ` | ${defaultTitle}`;
+							}
+						});
+					});
+
+					document.body.append(preloadContainer);
+				}
+			);
+		</script>
+	</body>
+</html>

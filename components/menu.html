@@ -1,0 +1,47 @@
+<nav id="menu-wrapper">
+	<button class="nav-menu-btn" data-page="pages/home.html">Главная</button>
+	<button class="nav-menu-btn" data-page="pages/history.html">История</button>
+	<button class="nav-menu-btn" data-page="pages/www1.html">WWW 1.0</button>
+	<button class="nav-menu-btn" data-page="pages/www2.html">WWW 2.0</button>
+	<button class="nav-menu-btn" data-page="pages/www3.html">WWW 3.0</button>
+	<button class="nav-menu-btn" data-page="pages/links.html">Источники</button>
+	<button class="nav-menu-btn" data-page="pages/about.html">Об авторе</button>
+</nav>
+<style>
+	#menu {
+		padding: 0 0.25rem;
+		background-color: #222;
+	}
+	#menu-wrapper {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: center;
+		max-width: 100%;
+		overflow-x: auto;
+		padding: 1px 0;
+	}
+	.nav-menu-btn {
+		display: block;
+		color: #ffffff !important;
+		font-size: 1rem;
+		text-shadow: 0px 0px 4px #333333;
+		box-shadow: 0px 0px 4px #333333;
+		padding: 8px 24px;
+		border-radius: 0.25rem;
+		border: 0px solid #3866a3;
+		background: #101e26;
+		cursor: pointer;
+		min-width: 11rem;
+	}
+	.nav-menu-btn:not(:first-child) {
+		margin-left: 0.25rem;
+	}
+
+	.nav-menu-btn:hover {
+		background: #243642;
+	}
+	.nav-menu-btn:disabled {
+		background: #1b3341;
+		box-shadow: inset 0px 0px 0.25rem #242424;
+	}
+</style>

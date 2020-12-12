@@ -1,0 +1,18 @@
+@media (orientation: portrait) {
+	#site-header,
+	#site-footer {
+		padding: 1rem 0 !important;
+	}
+	h1 {
+		font-size: 1.5rem !important;
+	}
+	p,
+	b {
+		font-size: 1.25rem !important;
+	}
+}
+@media (max-width: 1300px) {
+	#menu-wrapper {
+		justify-content: flex-start !important;
+	}
+}
