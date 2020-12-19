@@ -1,18 +1,23 @@
 @media (orientation: portrait) {
-	#site-header,
-	#site-footer {
-		padding: 1rem 0 !important;
-	}
-	h1 {
-		font-size: 1.5rem !important;
-	}
-	p,
-	b {
-		font-size: 1.25rem !important;
-	}
+  #site-header,
+  #site-footer {
+    padding: 1rem 0 !important;
+  }
+  h1 {
+    font-size: 1.5rem !important;
+  }
 }
 @media (max-width: 1300px) {
-	#menu-wrapper {
-		justify-content: flex-start !important;
-	}
+  #menu-wrapper {
+    justify-content: flex-start !important;
+  }
+  figure.card {
+    display: flex;
+    flex-flow: column;
+  }
+  figure.card > img {
+    width: 50% !important;
+    display: block;
+    margin: 0 auto;
+  }
 }
